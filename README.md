@@ -28,17 +28,73 @@
 </div>
 
 <!-- IMAGE 2 AND 3 -->
-<table>
+<table align="center">
   <tr>
     <!-- image 2 -->
     <td align="center">
-      <img src="screencaps/welcome_screen.png" alt="Game Setup" width="350>
-      <i>Welcome + Player Setup</i>
+      <img src="screencaps/welcome_screen.png" alt="Game Setup" width="450">
+      <p><i>Welcome + Player Setup</i></p>
     </td>
     <!-- image 3 -->
     <td align="center">
-      <img src="screencaps/game_start_set_order.png" alt="Player Shuffling" width="350">
-      <i>Inky shuffles - lavender highlight shows who goes first</i>
+      <img src="screencaps/game_start_set_order.png" alt="Player Shuffling" width="450">
+      <p><i>Inky shuffles - lavender highlight shows who goes first</i></p>
     </td>
   </tr>
 </table>
+
+<!-- IMAGE 4 AND 5 -->
+<table align="center">
+  <tr>
+    <!-- image 4 -->
+    <td align="center">
+      <img src="screencaps/gameplay_2_plus4.png" alt="Player gets +4'ed by Another player" width="450">
+      <p><i>Binky hitting Pinky with a +4</i></p>
+    </td>
+    <!-- image 5 -->
+    <td align="center">
+      <img src="screencaps/drawing_card_plus4.png" alt="Playing a +4 Card" width="400">
+      <p><i>Drawing a +4 from the pile and unleashing it :3</i></p>
+    </td>
+  </tr>
+</table>
+
+<!-- IMAGE 6 AND 7 -->
+<table align="center">
+  <tr>
+    <!-- image 6 -->
+    <td align="center">
+      <img src="screencaps/cpu_gets_uno.png" alt="AI Player calls UNO!" width="450">
+      <p><i>Time to lock in.</i></p>
+    </td>
+    <!-- image 7 -->
+    <td align="center">
+      <img src="screencaps/human_player_gets_uno.png" alt="Human player calls UNO!" width="400">
+      <p><i>UNO FOR CLYDE!</i></p>
+    </td>
+  </tr>
+</table>
+
+<!-- IMAGE 8 AND 9 -->
+<table align="center">
+  <tr>
+    <!-- image 8 -->
+    <td align="center">
+      <img src="screencaps/cpu_wins_game.png" alt="AI Player wins the game" width="450">
+      <p><i>We can't all be winners...</i></p>
+    </td>
+    <!-- image 9 -->
+    <td align="center">
+      <img src="screencaps/human_player_wins.png" alt="Human player wins the game!" width="400">
+      <p><i>NEVERMIND!!</i></p>
+    </td>
+  </tr>
+</table>
+
+<!-- IMAGE 10 -->
+<div align="center">
+  <img src="screencaps/display_rules.png" alt="Rule Display" width="400">
+  <p><i>Full rules display accessible at any time during the game</i></p>
+</div>
+
+<hr>
