@@ -97,4 +97,182 @@
   <p><i>Full rules display accessible at any time during the game</i></p>
 </div>
 
+---
+
 <hr>
+
+# ⋆｡°✩ ★ TECH STACK AND SKILLS DEMONSTRATED
+
+| Concept | Implementation |
+|---|---|
+|**Abstract classes + polymorphism**|`Card` is an abstract base class; `NumberCard`, `ActionCard`, and `WildCard` each override `CanPlayOn()`|
+|**Circular doubly linked list**|`Lineup` manages player turn order with wrap-around, direction reversal, and skip logic|
+|**Dynamic memory management**|`Game` owns all `Card*` and `Player*` objects; safe destructor chain with no memory leaks|
+|**File I/O parsing**|`uno_deck.txt` parsed with `getline()` and delimiter splitting to construct the right subclass per card|
+|**Operator overloading**|`Card::operator==` compares cards by color and value for duplicate detection|
+|`enum class`|`CardColor` scoped enum for type-safe color selection in wild card logic|
+|**ANSI terminal UI**|RGB codes via `Colors.h` - fully themeable card display system|
+|**Separation of concerns**|`Card` describes itself, `Player` manages a hand, `Lineup` manages order, `Game` runs everything|
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ CARD HIERARCHY
+
+```
+Card  (abstract base — CanPlayOn() is pure virtual)
+├── NumberCard    (colors: red/yellow/green/blue, values: 0-9)
+├── ActionCard    (Skip, Reverse, +2 — colored)
+└── WildCard      (+4, Wild — color chosen at play time)
+```
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ HOW TO BUILD AND RUN
+
+## Requirements
+- Windows (uses `windows.h` for ANSI color support)
+- Visual Studio 2022 or later
+- C++ 20 or later
+
+
+## Steps 
+### 1. **Clone the repo**
+``` bash
+git clone https://github.com/bbraide/UnoGame.git
+cd UnoGame
+```
+
+### 2. **Open in Visual Studio**
+- Open `uno-cpp/UnoGame/UnoGame.sln` in Visual Studio 2022 (or later)
+
+### 3. **Check the deck file location**
+- Visual Studio looks for files relative to the project folder. Ensure `uno_deck.txt` is inside:
+  `uno-cpp/UnoGame/UnoGame/uno_deck.txt`
+- *Note: If it's missing, copy the one from the root folder into that directory!*
+
+### 4. **Set C++ Standard to C++20**
+- Right-click project → **Properties** → **Configuration Properties** → **General** → **C++ Language Standard** → `ISO C++20 Standard (/std:c++20)`
+
+### 5. **Build & Run**
+- Hit `Ctrl+F5` and end some friendships!
+
+> [!NOTE] 
+> ANSI colors require Windows 10 or later. The game automatically enables virtual terminal processing on startup.
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ GAMEPLAY
+
+```
+Welcome to C++ UNO! What's your name? Clyde
+Nice to meet you, Clyde! How many people (including you) are playing today? (2-4 players) 4
+
+~*-*~
+
+Hey Clyde! Player 1, Player 2 and Player 3 are waiting for you. What would you like to do?
+1. Rules
+2. Give Players Names
+3. Start Game
+4. I Don't Feel Like Playing UNO Anymore
+```
+
+---
+
+<hr>
+
+<details>
+  <summary>⋆｡°✩ ★ FULL UNO RULES (click to expand)</summary>
+  <br>
+  
+- Match the top card by **color** OR **number/action**
+- **Skip** — next player loses their turn
+- **Reverse** — play direction flips (acts as Skip in 2-player)
+- **+2** — next player draws 2 cards and loses their turn
+- **Wild** — play anytime, choose any color
+- **+4** — play anytime, next player draws 4 cards and loses their turn, then choose any color
+- When you draw from the pile, you may immediately play it if it's valid
+- If the draw pile runs out, the discard pile is automatically reshuffled
+- First player to **0 cards** wins!
+  
+</details>
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ YOUR TURN MENU
+
+```
+What's your move?
+1. View my cards
+2. See player order
+3. Place cards
+4. Draw from pile
+5. Rules
+6. Quit
+```
+
+>[!WARNING]
+>Choosing "Nah" when you have one card left will cost you two cards, so choose carefully 👀
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ PROJECT STRUCTURE
+
+```
+UnoGame/ (Repo Root)
+├── screencaps/             # README screenshots
+├── uno_deck.txt            # Deck source file
+├── uno_sample.txt          # Sample game output
+├── README.md               # YOU ARE HERE
+└── uno-cpp/                # Main project container
+    ├── src/                # All source and header files
+    │   ├── ActionCard.cpp
+    │   ├── ActionCard.h
+    │   ├── Card.h
+    │   ├── Colors.h
+    │   ├── Game.cpp
+    │   ├── Game.h
+    │   ├── Lineup.cpp
+    │   ├── Lineup.h
+    │   ├── main.cpp
+    │   ├── NumberCard.cpp
+    │   ├── NumberCard.h
+    │   ├── Player.cpp
+    │   ├── Player.h
+    │   ├── WildCard.cpp
+    │   └── WildCard.h
+    └── UnoGame/            # Visual Studio solution folder
+        ├── UnoGame.sln     # VS Solution file
+        └── UnoGame/        # Project folder
+            ├── UnoGame.vcxproj
+            └── uno_deck.txt
+```
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ ROADMAP
+
+- **v1.1** — inclusive pronoun system for all players (comma-delimited input: `she,her,her` / `they,them,their` / custom neopronouns fully supported), smarter AI (prefers special cards), +2/+4 stacking rules, playable card highlighting
+- **v1.2** — tournament mode (first to win 3 rounds), score tracking across games
+- **v2.0** — cross-platform port (Linux/Mac), GUI with raylib or SDL
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ ABOUT 
+Started this as a mini passion project in my junior year of college (fall semester) to demonstrate core C++ concepts beyond the classroom. Here we are a year and a half later!
+
+**Connect:**
+[GitHub](https://github.com/bbraide) · [@bberetd on Instagram](https://instagram.com/bberetd)
