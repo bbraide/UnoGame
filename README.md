@@ -18,7 +18,27 @@
 
 # ⋆｡°✩ ★ SCREENSHOTS
 
+<!-- IMAGE 1 -->
 <div align="center">
-  ![Rainbow Hand](screencaps/gameplay 1.png)
-  *The rainbow hand display — every card in its own color 🌈*
+  <p><sub><i>(User input is in pink or yellow!)</i></sub></p>
+  
+  <img src="screencaps/gameplay_1.png" alt="Gameplay Screenshot" width="400">
+  <p><i>Colorful hand display. Special cards are emboldened!</i></p>
+
 </div>
+
+<!-- IMAGE 2 AND 3 -->
+<table>
+  <tr>
+    <!-- image 2 -->
+    <td align="center">
+      <img src="screencaps/welcome_screen.png" alt="Game Setup" width="350>
+      <i>Welcome + Player Setup</i>
+    </td>
+    <!-- image 3 -->
+    <td align="center">
+      <img src="screencaps/game_start_set_order.png" alt="Player Shuffling" width="350">
+      <i>Inky shuffles - lavender highlight shows who goes first</i>
+    </td>
+  </tr>
+</table>
