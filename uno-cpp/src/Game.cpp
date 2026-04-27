@@ -238,9 +238,10 @@ void Game::SetPlayerNames(int numPlayers) {
 void Game::ShuffleCards() {
 	// seed random engine
 	default_random_engine rng((unsigned int)time(0));
+	uniform_int_distribution<int> dist(0, m_numPlayers - 1);
 
 	// randomly pick who shuffles (and therefore goes first)
-	int shufflerIdx = rand() % m_numPlayers;
+	int shufflerIdx = dist(rng);
 	Player* shuffler = m_players[shufflerIdx];
 	cout << "\n-> " << shuffler->GetName() << " chose to shuffle the cards." << endl;
 
