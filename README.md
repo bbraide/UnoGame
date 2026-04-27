@@ -163,20 +163,6 @@ cd UnoGame
 > [!NOTE] 
 > ANSI colors require Windows 10 or later. The game automatically enables virtual terminal processing on startup.
 
----
-
-<hr>
-
-# ⋆｡°✩ ★ HOW TO PLAY
-
-The game is fully interactive and will prompt you whenever input is needed.
-- **Place Cards** (option ***3***): Enter the __<ins>card type</ins>__, __<ins>color</ins>__, and __<ins>number</ins>__ (in three separate steps) corresponding to the card you want to play.
-- **Draw from pile** (option ***4***): If you have no playable cards, you can choose to draw a card.
-- **Wilds**: Follow the on-screen prompt to choose a new color.
-
-> [!WARNING]
-> **Input Stability**: Currently, the game expects the correct data types (integers for selection, etc.). Entering letters when a number is expected may cause the game to crash. Input validation is a work-in-progress for v1.1!
-
 
 ---
 
@@ -201,6 +187,38 @@ Hey Clyde! Player 1, Player 2 and Player 3 are waiting for you. What would you l
 
 <hr>
 
+# ⋆｡°✩ ★ YOUR TURN MENU
+
+```
+What's your move?
+1. View my cards
+2. See player order
+3. Place cards
+4. Draw from pile
+5. Rules
+6. Quit
+```
+
+***Choosing "Nah" when you have one card left will cost you two cards, so choose carefully 👀***
+
+---
+
+<hr>
+
+# ⋆｡°✩ ★ HOW TO PLAY
+
+The game is fully interactive and will prompt you whenever input is needed.
+- **Place Cards** (option ***3***): Enter the __<ins>card type</ins>__, __<ins>color</ins>__, and __<ins>number</ins>__ (in three separate steps) corresponding to the card you want to play.
+- **Draw from pile** (option ***4***): If you have no playable cards, you can choose to draw a card.
+- **Wilds**: Follow the on-screen prompt to choose a new color.
+
+> [!WARNING]
+> **Input Stability**: Currently, the game expects the correct data types (integers for selection, etc.). Entering letters when a number is expected may cause the game to crash. Input validation is a work-in-progress for v1.1!
+
+---
+
+<hr>
+
 <details>
   <summary>⋆｡°✩ ★ FULL UNO RULES (click to expand)</summary>
   <br>
@@ -216,25 +234,6 @@ Hey Clyde! Player 1, Player 2 and Player 3 are waiting for you. What would you l
 - First player to **0 cards** wins!
   
 </details>
-
----
-
-<hr>
-
-# ⋆｡°✩ ★ YOUR TURN MENU
-
-```
-What's your move?
-1. View my cards
-2. See player order
-3. Place cards
-4. Draw from pile
-5. Rules
-6. Quit
-```
-
->[!WARNING]
->Choosing "Nah" when you have one card left will cost you two cards, so choose carefully 👀
 
 ---
 
