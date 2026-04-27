@@ -167,6 +167,21 @@ cd UnoGame
 
 <hr>
 
+# ⋆｡°✩ ★ HOW TO PLAY
+
+The game is fully interactive and will prompt you whenever input is needed.
+- **Place Cards** (option ***3***): Enter the __<ins>card type</ins>__ (first step), __<ins>color</ins>__ (first step) and __<ins>number</ins>__ (third step) corresponding to the card in you want to place into the pile.
+- **Draw from pile** (option ***4***): If you have no playable cards, you can choose to draw a card.
+- **Wilds**: Follow the on-screen prompt to choose a new color.
+
+> [!WARNING]
+> **Input Stability**: Currently, the game expects the correct data types (integers for selection, etc.). Entering letters when a number is expected may cause the game to crash. Input validation is a work-in-progress for v1.1!
+
+
+---
+
+<hr>
+
 # ⋆｡°✩ ★ GAMEPLAY
 
 ```
