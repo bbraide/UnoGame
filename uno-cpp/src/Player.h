@@ -24,6 +24,13 @@ class Player {
         string GetName() const;
         void SetName(string name);
 
+		// pronoun getters and setters
+		string GetPronounSubject() const;  // he/she/they
+		string GetPronounObject() const;   // him/her/them
+		string GetPronounPossessive() const;  // his/her/their
+		string GetPronounReflexive() const;  // himself/herself/themselves
+		void SetPronouns(string subject, string object, string possessive, string reflexive);  // sets all four pronouns at once for easier input and to ensure consistency between them (ex. can't have "he" and "them" for the same player)
+
         // DLL getters and setters
         Player* GetNext() const;
         void SetNext(Player* next);
@@ -82,6 +89,12 @@ class Player {
         bool m_calledUno;       // true once UNO has been announced for this player
         // set to true when PlayerCardsLeft() == 1
         // set to false when more cards gets added to player's deck (AddCard())
+
+        // PLAYER PRONOUNS
+		string m_pronounSubject;  // he/she/they
+		string m_pronounObject;   // him/her/them
+		string m_pronounPossessive;  // his/her/their
+		string m_pronounReflexive;  // himself/herself/themselves
 };
 
 #endif

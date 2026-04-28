@@ -127,8 +127,9 @@ void Game::WelcomeMenu() {
 			 << "waiting for you. What would you like to do?" << endl;
 		cout << "1. Rules" << endl;
 		cout << "2. Give Players Names" << endl;
-		cout << "3. Start Game" << endl;
-		cout << "4. I Don't Feel Like Playing UNO Anymore" << endl;
+		cout << "3. Give Players Pronouns" << endl;
+		cout << "4. Start Game" << endl;
+		cout << "5. I Don't Feel Like Playing UNO Anymore" << endl;
 		cin >> choice;
 		cin.ignore();
 
@@ -150,9 +151,12 @@ void Game::WelcomeMenu() {
 			}
 			break;
 		case 3:
-			gameStarted = true;
+			SetPlayerPronouns();
 			break;
 		case 4:
+			gameStarted = true;
+			break;
+		case 5:
 			cout << "Are you sure? I'll tell the others. Come again soon!" << endl;
 			return;
 		default:
@@ -212,7 +216,7 @@ void Game::PopulatePlayers(int numPlayers) {
 
 
 // =============================================================================================
-// SET PLAYER NAMES
+// PLAYER PERSONALIZATION
 // =============================================================================================
 
 void Game::SetPlayerNames(int numPlayers) {
@@ -228,6 +232,27 @@ void Game::SetPlayerNames(int numPlayers) {
 	}
 	cout << "Names have been updated." << endl;
 	m_namesGiven = true;
+}
+
+//////
+
+void Game::SetPlayerPronouns() {
+	for (int i = 0; i < (int)m_players.size(); i++) {
+		string subject, object, possessive, reflexive;
+		cout << "Enter ";
+		if (m_players[i] == m_mainPlayer) cout << "your" << " preferred pronouns (e.g she,her,her,herself): ";
+		else cout << m_players[i]->GetName() << "'s" << " preferred pronouns (e.g she,her,her,herself): ";
+
+		// #reducereuserecycle the parsing code from PopulateCards for comma-separated input
+		const char DELIM = ',';
+		getline(cin, subject, DELIM);
+		getline(cin, object, DELIM);
+		getline(cin, possessive, DELIM);
+		getline(cin, reflexive, '\n');
+
+		m_players[i]->SetPronouns(subject, object, possessive, reflexive);
+	}
+	cout << "Pronouns have been set!" << endl;
 }
 
 
@@ -276,7 +301,7 @@ void Game::ShuffleCards() {
 		// dealer gives human cards
 		else if (recipient == m_mainPlayer) cout << "-> " << shuffler->GetName() << " hands you " << recipient->PlayerCardsLeft() << " cards." << endl;
 		// dealer gives themselves cards 
-		else if (recipient == shuffler) cout << "-> " << shuffler->GetName() << " gives themselves " << recipient->PlayerCardsLeft() << " cards." << endl;
+		else if (recipient == shuffler) cout << "-> " << shuffler->GetName() << " gives " << shuffler->GetPronounReflexive() << " " << recipient->PlayerCardsLeft() << " cards." << endl;
 		// dealer giving other players cards
 		else cout << "-> " << shuffler->GetName() << " hands " << recipient->GetName() << " " << recipient->PlayerCardsLeft() << " cards." << endl;
 	}
@@ -302,7 +327,9 @@ void Game::ShuffleCards() {
 
 	// print turn order
 	cout << "\nSince " << shuffler->GetName()
-		<< " shuffled the cards, they go first. The order is:\n" << endl;
+		<< " shuffled the cards, " << shuffler->GetPronounSubject()
+		<< (shuffler->GetPronounSubject() == "they" ? " go " : " goes ")
+		<< "first. The order is:\n" << endl;
 	cout << "    ";
 	m_lineup.DisplayLineup(m_mainPlayer->GetName());
 	cout << endl;
@@ -444,7 +471,9 @@ void Game::HandleAiUno(Player* player) {
 	if (player == m_mainPlayer) HandleHumanUno();
 	else {
 		cout << WARNING << "\n" << player->GetName()
-			<< " just called UNO! They feel a bunch of targets down their back."
+			<< " just called UNO! " << player->GetPronounSubject() 
+			<< (player->GetPronounSubject() == "they" ? " feel " : " feels ")
+			<< "a bunch of targets down " << player->GetPronounPossessive() << " back."
 			<< RESET << endl;
 	}
 }
@@ -661,7 +690,7 @@ void Game::PlayerTurn(Player* currPlayer) {
 		chosen->SetHasPlayed(true);
 		m_cardStack.insert(m_cardStack.begin(), chosen);
 		currPlayer->RemoveCard(chosen);
-		cout << "-> " << currPlayer->GetName() << " places their card into the pile!" << endl;
+		cout << "-> " << currPlayer->GetName() << " places " << currPlayer->GetPronounPossessive() << " card into the pile!" << endl;
 		DisplayTopCard();
 
 		// if wild or +4, AI picks a random color
@@ -692,7 +721,7 @@ void Game::PlayerTurn(Player* currPlayer) {
 				if (wild) AiChooseColor(wild, currPlayer);
 				ApplyCardEffect(drawn);
 			}
-			else cout << "-> " << currPlayer->GetName() << " keeps their card." << endl;
+			else cout << "-> " << currPlayer->GetName() << " keeps " << currPlayer->GetPronounPossessive() << " card." << endl;
 		}
 	}
 }

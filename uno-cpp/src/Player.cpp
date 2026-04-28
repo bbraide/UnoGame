@@ -13,6 +13,17 @@ Player::~Player() {
 string Player::GetName() const { return m_name; }
 void Player::SetName(string name) { m_name = name; }
 
+// pronoun getters and setters
+string Player::GetPronounSubject() const { return m_pronounSubject; }
+string Player::GetPronounObject() const { return m_pronounObject; }
+string Player::GetPronounPossessive() const { return m_pronounPossessive; }
+string Player::GetPronounReflexive() const { return m_pronounReflexive; }
+void Player::SetPronouns(string subject, string object, string possessive, string reflexive) {
+	m_pronounSubject = subject;
+	m_pronounObject = object;
+	m_pronounPossessive = possessive;
+	m_pronounReflexive = reflexive;
+}
 
 // DLL getters and setters
 Player* Player::GetNext() const { return m_next; }

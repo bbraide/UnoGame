@@ -67,6 +67,10 @@ class Game
 		// CAN ONLY BE CALLED ONCE! m_namesGiven prevents double naming
 		void SetPlayerNames(int numPlayers);
 
+		// prompts user to select their pronouns for the game; updates
+		// the human player's pronoun fields accordingly
+		void SetPlayerPronouns();
+
 
 		// ====================================================================
 		// STARTING THE GAME!!
