@@ -29,6 +29,17 @@ const string BLUE = "\033[38;2;100;180;255m";
 
 
 // ==============================================================================================
+// UNPLAYABLE VERSIONS OF COLORS 
+// 30% of the original RGB values to make them look faded and indicate that the card has already been played
+// ==============================================================================================
+const string UNPLAYABLE_RED = "\033[38;2;100;40;40m";   // washed out red
+const string UNPLAYABLE_YELLOW = "\033[38;2;100;87;20m";   // washed out yellow
+const string UNPLAYABLE_GREEN = "\033[38;2;40;88;40m";    // washed out green
+const string UNPLAYABLE_BLUE = "\033[38;2;40;72;100m";   // washed out blue
+const string UNPLAYABLE_WILD = "\033[38;2;100;72;28m";   // washed out orange (unlikely use cause they can always be played)
+
+
+// ==============================================================================================
 // SPECIAL CARDS: COLOR + BOLD
 // wild and +4 cards will be printed in orange to make them stand out more from number cards
 // will be used like cout << BOLD_WILD << "Wild" << RESET; to print "Wild" in bold orange text
@@ -63,5 +74,18 @@ inline string cardColor(const string& color, bool isSpecial = false) {
 	return base;
 }
 
+// ==============================================================================================
+// UNPLAYABLE COLOR HELPER - returns the right string for a card's color field
+//  usage: cout << unplayableCardColor(card->getColor()) << card->getCardVal() << RESET;
+// ==============================================================================================
+inline string unplayableColor(const string& color) {
+	string base;
+	if (color == "red")	base = UNPLAYABLE_RED;
+	else if (color == "yellow") base = UNPLAYABLE_YELLOW;
+	else if (color == "green") base = UNPLAYABLE_GREEN;
+	else if (color == "blue") base = UNPLAYABLE_BLUE;
+	else base = UNPLAYABLE_WILD;   // "TBD" — wild or +4
+	return base;
+}
 
 #endif

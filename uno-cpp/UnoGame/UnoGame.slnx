@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="UnoGame/UnoGame.vcxproj" />
+  <Project Path="UnoGame/UnoGame.vcxproj" Id="9e1ab6f0-b882-487a-85bf-4dc5b62345e3" />
 </Solution>

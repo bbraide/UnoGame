@@ -754,7 +754,7 @@ void Game::HumanTurn() {
 
 		switch (choice) {
 			case 1:
-				m_mainPlayer->DisplayCards();
+				m_mainPlayer->DisplayCards(GetTopCard());
 				break;
 
 
@@ -768,7 +768,7 @@ void Game::HumanTurn() {
 
 			case 3: {
 				// show hand and prompt for card to play
-				m_mainPlayer->DisplayCards();
+				m_mainPlayer->DisplayCards(GetTopCard());
 				DisplayTopCard();
 				int cardType = 0;
 				bool cardPlayed = false;
@@ -927,11 +927,11 @@ void Game::HumanTurn() {
 				}
 			}
 
-			case 5:
+			case 5: {
 				DisplayRules();
 				cout << "\n====\n" << endl;
 				break;
-
+			}
 				
 			case 6: {
 				char yn;

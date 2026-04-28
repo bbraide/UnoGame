@@ -68,7 +68,8 @@ class Player {
         // if there exists cards that have been drawn, place at end and make the text red
         // we only care about SortCards and DisplayCards for human player (obvi)
         // group duplicates appear as "Red 6 (x2)" using nested for loops
-        void DisplayCards() const;
+		// NEW: if a card is not eligible to be played (ex. color doesn't match and number doesn't match), print in faded color to indicate that it's not a valid play
+        void DisplayCards(Card* topCard) const;
 
         // returns the number of cards the player has not drawn
         int PlayerCardsLeft() const;

@@ -89,7 +89,7 @@ Card* Player::GetCardAt(int index) const {
 
 
 // DISPLAY
-void Player::DisplayCards() const {
+void Player::DisplayCards(Card* topCard) const {
 	cout << "\nYour current deck is:\n" << endl;
 	cout << "	";
 
@@ -138,6 +138,7 @@ void Player::DisplayCards() const {
 		string val = m_playerDeck[i]->GetCardVal();
 		bool isSpecial = (val == "skip") || (val == "reverse") || (val == "+2");  
 		bool hasPlayed = m_playerDeck[i]->GetHasBeenPlayed();
+		bool canPlay = topCard ? m_playerDeck[i]->CanPlayOn(topCard) : true;  // if topCard is nullptr (should only happen at the very start of the game), treat all cards as playable (NEW)
 
 
 		// PLAYED CARDS
@@ -150,6 +151,11 @@ void Player::DisplayCards() const {
 			// number cards and action cards
 			else cout << "*" << color << " " << val << "*";
 			cout << RESET;
+		}
+
+		else if (!canPlay) {
+			if (color == "TBD") cout << unplayableColor(color) << (val == "+4" ? "+4 Card" : "Wild Card") << RESET;  // even if it's a wild or +4, if it can't be played, print in faded color to indicate that
+			else cout << unplayableColor(color) << color << " " << val << RESET;  // faded color for cards that can't be played
 		}
 
 		// WILD CARDS (WILD AND +4)
@@ -174,9 +180,12 @@ void Player::DisplayCards() const {
 		if (duplicateCount > 1) cout << " (x" << duplicateCount << ")";  // print count if there are duplicates
 	}
 
-	cout << endl;
-	if (anyPlayed) cout << PLAYED << "*grey = cards already played*" << RESET << endl;  // legend for what grey cards mean
-	cout << endl;
+	
+		cout << endl;
+		if (anyPlayed){ 
+			cout << PLAYED << "*grey = cards already played*" << RESET << endl;  // legend for what grey cards mean
+		}
+		cout << endl;
 }
 
 
