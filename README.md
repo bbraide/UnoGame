@@ -213,7 +213,7 @@ The game is fully interactive and will prompt you whenever input is needed.
 - **Wilds**: Follow the on-screen prompt to choose a new color.
 
 > [!WARNING]
-> **Input Stability**: Currently, the game expects the correct data types (integers for selection, etc.). Entering letters when a number is expected may cause the game to crash. Input validation is a work-in-progress for v1.1!
+> **Input Stability**: Currently, the game expects the correct data types (integers for selection, etc.). Entering letters when a number is expected may cause the game to crash. Input validation is a work-in-progress for v1.3!
 
 ---
 
@@ -278,8 +278,11 @@ UnoGame/ (Repo Root)
 # ⋆｡°✩ ★ ROADMAP
 
 - **v1.1** — inclusive pronoun system for all players (comma-delimited input: `she,her,her` / `they,them,their` / custom neopronouns fully supported), playable card highlighting
-- **v1.2** — +2/+4 stacking rules, smarter AI (prefers special cards)
-- **v1.3** — tournament mode (first to win 3 rounds), score tracking across games
+- **v1.2** — human player multiple card placement
+- **v1.3** — medium AI (greedy multi-card + smarter choices)
+- **v1.4** - hardest mode possible, input type validation
+- **v1.5** - +2/+4 stacking
+- **v1.6** - tournament mode (first to win 3 rounds), score tracking across games
 - **v2.0** — cross-platform port (Linux/Mac), GUI with raylib or SDL
 
 ---
