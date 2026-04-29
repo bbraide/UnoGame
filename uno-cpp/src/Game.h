@@ -116,6 +116,10 @@ class Game
 		*/
 		void HumanTurn();
 
+		// (NEW v1.2) plays multiple cards in one sequence, applying each effect (if applicable) as they go
+		// called after human confirms their full set of cards to play
+		void MultipleCardPlay(vector<Card*>& playedCards);
+
 		// applies the effect of a special card after it's been played
 		// skip -> Skip(), reverse -> Reverse(), +2/+4 -> deal penalty cards
 		void ApplyCardEffect(Card* card);

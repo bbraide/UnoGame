@@ -792,33 +792,89 @@ void Game::HumanTurn() {
 						cin.ignore();
 						if (val == -1) break;
 
+						// get the first card
+						Card* firstCard = nullptr;
+
 						// search player's hand for the card they described
-						Card* toPlay = nullptr;
 						for (int i = 0; i < m_mainPlayer->PlayerCardsLeft(); i++) {
 							Card* c = m_mainPlayer->GetCardAt(i);
 							if (c && c->GetColor() == color && c->GetCardVal() == to_string(val)) {
-								toPlay = c;
+								firstCard = c;
 								break;
 							}
 						}
 
-						if (!toPlay) {
-							cout << "You don't have that card." << endl;
-							break;
+						
+						if (!firstCard) { cout << "You don't have that card." << endl; break; }
+						if (!IsValidPlay(firstCard)) { cout << "That card can't be played." << endl; break; }
+
+						// ooooothherwiiiiiseeeeeee
+						// start building playedCards vector with the first card
+						vector<Card*> playedCards;
+						playedCards.push_back(firstCard);
+
+						// check for additional cards of the same number
+						bool canAddMore = true;
+						while (canAddMore) {
+							// find eligible cards of the same value (not already in playedCards)
+							vector<Card*> eligibleCards;
+
+							for (int i = 0; i < m_mainPlayer->PlayerCardsLeft(); i++) {
+								Card* c = m_mainPlayer->GetCardAt(i);
+								if (!c) continue; // safety check
+								// same number, not already in playedCards
+								bool alreadyPlayed = false;
+								// check if c is already in playedCards; if so, skip it
+								for (int j = 0; j < (int)playedCards.size(); j++) {
+									if (playedCards[j] == c) { alreadyPlayed = true; break; }
+								}
+
+								if (!alreadyPlayed && c->GetCardVal() == firstCard->GetCardVal()) eligibleCards.push_back(c);
+							}
+
+							// no eligible cards were found, so end the loop
+							if (eligibleCards.empty()) {
+								canAddMore = false;
+								break;
+							}
+
+							// show eligible cards and prompt for which to add (or none)
+							cout << "\nYou can also play: ";
+							for (int i = 0; i < (int)eligibleCards.size(); i++) {
+								string eColor = eligibleCards[i]->GetColor();
+								string eVal = eligibleCards[i]->GetCardVal();
+								cout << cardColor(eColor) << eColor << " " << eVal << RESET;
+								if (i < (int)eligibleCards.size() - 1) cout << ", ";
+							}
+							cout << endl;
+
+							// prompt for color of card to add, or option to not add more
+							cout << "Add another card? (Y/N) ";
+							char yn; cin >> yn; cin.ignore();
+							if (yn != 'Y' && yn != 'y') {
+								canAddMore = false; break;
+							}
+
+							// pick which card to add
+							string addColor; int addVal;
+							cout << "\nEnter color: ";
+							getline(cin, addColor);
+							cout << "Enter value: ";
+							cin >> addVal; cin.ignore();
+
+							Card* toAdd = nullptr;
+							for (int i = 0; i < (int)eligibleCards.size(); i++) {
+								if (eligibleCards[i]->GetColor() == addColor && eligibleCards[i]->GetCardVal() == to_string(addVal)) {
+									toAdd = eligibleCards[i];
+									break;
+								}
+							}
+
+							if (!toAdd) cout << "That card isn't eligible." << endl;
+							else playedCards.push_back(toAdd);
 						}
 
-						if (!IsValidPlay(toPlay)) {
-							cout << "That card can't be played on the current top card." << endl;
-							break;
-						}
-
-						// OTHERWISE.....
-						toPlay->SetHasPlayed(true);
-						m_cardStack.insert(m_cardStack.begin(), toPlay);
-						m_mainPlayer->RemoveCard(toPlay);
-						cout << "\n -> You placed your card into the pile!" << endl;
-						DisplayTopCard();
-						ApplyCardEffect(toPlay);
+						MultipleCardPlay(playedCards);
 						turnOver = true;
 						cardPlayed = true;
 						break;
@@ -833,31 +889,94 @@ void Game::HumanTurn() {
 						cout << "Enter the action (+2, reverse, skip, wild, +4): ";
 						getline(cin, val);
 
+						// get the first card
+						Card* firstCard = nullptr;
+
 						// search player's hand for the card they described
-						Card* toPlay = nullptr;
 						for (int i = 0; i < m_mainPlayer->PlayerCardsLeft(); i++) {
 							Card* c = m_mainPlayer->GetCardAt(i);
 							if (c && c->GetColor() == color && c->GetCardVal() == val) {
-								toPlay = c;
+								firstCard = c;
 								break;
 							}
 						}
 
-						if (!toPlay) { cout << "You don't have that card." << endl; break; }
-						if (!IsValidPlay(toPlay)) { cout << "That card can't be played." << endl; break; }
 
-						// otherwiiiiseeeeee
-						toPlay->SetHasPlayed(true);
-						m_cardStack.insert(m_cardStack.begin(), toPlay);
-						m_mainPlayer->RemoveCard(toPlay);
+						if (!firstCard) { cout << "You don't have that card." << endl; break; }
+						if (!IsValidPlay(firstCard)) { cout << "That card can't be played." << endl; break; }
 
-						// if wild or +4, prompt for color
-						WildCard* wild = dynamic_cast<WildCard*>(toPlay);
-						if (wild) ChooseColor(wild);
+						// ooooothherwiiiiiseeeeeee
+						// start building playedCards vector with the first card
+						vector<Card*> playedCards;
+						playedCards.push_back(firstCard);
 
-						cout << "\n-> You placed your card into the pile!" << endl;
-						DisplayTopCard();
-						ApplyCardEffect(toPlay);
+						// check for additional cards of the same number
+						bool canAddMore = true;
+						while (canAddMore) {
+							// WORKFLOW
+							// -> find eligible cards of the same value (not already in playedCards)
+							// -> for each iteration of the player's hand, check if that card is already in the playedCards vector (if so, skip)
+							// -> then check if the current card's value matches the first card's value
+							// -> if yes, push to eligibleCards vec. if no, do nothing
+							vector<Card*> eligibleCards;
+
+							for (int i = 0; i < m_mainPlayer->PlayerCardsLeft(); i++) {
+								Card* c = m_mainPlayer->GetCardAt(i);
+								if (!c) continue; // safety check
+								// same value, not already in playedCards
+								bool alreadyPlayed = false;
+								// check if c is already in playedCards; if so, skip it
+								for (int j = 0; j < (int)playedCards.size(); j++) {
+									if (playedCards[j] == c) { alreadyPlayed = true; break; }
+								}
+
+								if (!alreadyPlayed && c->GetCardVal() == firstCard->GetCardVal() && val != "wild") eligibleCards.push_back(c);
+							}
+
+							// no eligible cards were found, so end the while loop
+							if (eligibleCards.empty()) {
+								canAddMore = false;
+								break;
+							}
+
+							// show eligible cards and prompt for which to add (or none)
+							cout << "\nYou can also play: ";
+							for (int i = 0; i < (int)eligibleCards.size(); i++) {
+								string eColor = eligibleCards[i]->GetColor();
+								string eVal = eligibleCards[i]->GetCardVal();
+								bool eIsSpecial = (eVal == "skip" || eVal == "reverse" || eVal == "+2");
+								cout << cardColor(eColor, eIsSpecial) << eColor << " " << eVal << RESET;
+								if (i < (int)eligibleCards.size() - 1) cout << ", ";
+							}
+							cout << endl;
+
+							// prompt for color of card to add, or option to not add more
+							cout << "Add another card? (Y/N) ";
+							char yn; cin >> yn; cin.ignore();
+							if (yn != 'Y' && yn != 'y') {
+								canAddMore = false; break;
+							}
+
+							// pick which card to add
+							string addColor, addVal;
+							cout << "\nEnter color: ";
+							getline(cin, addColor);
+							cout << "Enter value: ";
+							getline(cin, addVal);
+
+							Card* toAdd = nullptr;
+							for (int i = 0; i < (int)eligibleCards.size(); i++) {
+								if (eligibleCards[i]->GetColor() == addColor && eligibleCards[i]->GetCardVal() == addVal) {
+									toAdd = eligibleCards[i];
+									break;
+								}
+							}
+
+							if (!toAdd) cout << "That card isn't eligible." << endl;
+							else playedCards.push_back(toAdd);
+						}
+
+						MultipleCardPlay(playedCards);
 						turnOver = true;
 						cardPlayed = true;
 						break;
@@ -955,6 +1074,44 @@ void Game::HumanTurn() {
 	} while (!turnOver);
 }
 // whew
+
+
+
+// =============================================================================================
+// MULTIPLE CARD PLAYS
+// =============================================================================================
+void Game::MultipleCardPlay(vector <Card*>& playedCards) {
+	// print what was played
+	cout << "\n-> You placed a ";
+	for (int i = 0; i < (int)playedCards.size(); i++) {
+		string color = playedCards[i]->GetColor();
+		string val = playedCards[i]->GetCardVal();
+		bool isSpecial = (val == "skip" || val == "reverse" || val == "+2");
+
+		if (color == "TBD") cout << BOLD_WILD << (val == "+4" ? "+4 Card" : "Wild Card") << RESET;
+		else if (isSpecial) cout << cardColor(color, true) << color << " " << val << RESET;
+		else cout << cardColor(color) << color << " " << val << RESET;
+
+		// separator logic
+		if (i < (int)playedCards.size() - 2)      cout << ", ";        // middle items
+		else if (i == (int)playedCards.size() - 2) cout << " and ";    // second to last
+	}
+	cout << " onto the stack!" << endl;
+
+	// apply effects of all cards played in order (if valid)
+	for (int i = 0; i < (int)playedCards.size(); i++) {
+		playedCards[i]->SetHasPlayed(true); 
+		m_cardStack.insert(m_cardStack.begin(), playedCards[i]); 
+		m_mainPlayer->RemoveCard(playedCards[i]);
+		ApplyCardEffect(playedCards[i]);
+
+		// if wild or +4, prompt for color (only applies to the last card played since that's the one on top)
+		WildCard* wild = dynamic_cast<WildCard*>(playedCards[i]);
+		if (wild && i == (int)playedCards.size() - 1) ChooseColor(wild);
+	}
+	DisplayTopCard();
+
+}
 
 
 // =============================================================================================
